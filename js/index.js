@@ -59,6 +59,7 @@ appendAnchor = newAnchor("#", "Ipsum");
 
 nav.prepend(prependAnchor);
 nav.append(appendAnchor);
+nav.style.backgroundColor = "darkgrey"; //Stretch
 
 function newAnchor(link, text) {
   let anchor = document.createElement("a");
@@ -82,9 +83,8 @@ function div_h4_p_contentFill(div, section) {
   const h4Key = `${section}-h4`;
   const pKey = `${section}-content`;
 
-  const h4 = (div.children[0].textContent = siteContent["main-content"][h4Key]);
-  const para = (div.children[1].textContent =
-    siteContent["main-content"][pKey]);
+  div.children[0].textContent = siteContent["main-content"][h4Key];
+  div.children[1].textContent = siteContent["main-content"][pKey];
 
   return div;
 }
@@ -94,10 +94,15 @@ const mainContent = document.querySelector("section.main-content");
 
 Array.from(mainContent.children).forEach(element => {
   if (element.className !== "middle-img") {
+    //STRETCH
+    //element.style.width = "10%";
+    element.style.display = "block";
     // element = "top-content", "middle-img", "bottom-content"
     Array.from(element.children).forEach((nestedDIV, i) => {
       // nestedDIVs are text-content divs
       nestedDIV = div_h4_p_contentFill(nestedDIV, contentOrder[i]);
+
+      nestedDIV.style.marginTop = "20px"; //STRETCH
     });
   } else {
     //   element.src = siteContent["main-content"]["middle-img-src"]; // This worked really well but goals say use getElementById
