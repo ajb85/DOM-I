@@ -1,27 +1,39 @@
 let time = { seconds: 0, ms: 0 };
 const interval = 10;
 
-let btn = document.querySelector("button");
-let counter;
-btn.addEventListener("click", startInterval);
+// addEventListener for the start timer button
+let startBtn = document.querySelector("button");
+enableStartBtn(1);
+
+let counter; // Global scope so I can pass the startInterval around easily
+
+let resetBtn = document.querySelectorAll("button")[1];
+resetBtn.disabled = true;
 
 function startInterval() {
-  if (time.seconds) {
-    // Reset timer on any future runs
-    time.seconds = 0;
-    time.ms = 0;
+  if (time.seconds || time.ms) {
+    resetTimer(); // Reset timer on any future runs
+
     // Reset text to white on any future runs
     document
       .querySelectorAll(".digit")
       .forEach(timerPiece => timerPiece.classList.remove("redDigit"));
   }
-  // Logging clicks to verify function (no "clicks" while timer running)
-  console.log("Click");
+
+  resetBtn.disabled = false;
+  resetBtn.addEventListener("click", handleResetClick);
+
+  console.log("Click"); // Logging clicks to verify function (no "clicks" while timer running)
+
   // btn disabled while counting
-  btn.removeEventListener("click", startInterval);
+  startBtn.removeEventListener("click", startInterval);
+  startBtn.disabled = true;
+
+  // Set initial times
   updateSeconds();
   updateMS();
-  counter = setInterval(runInterval, interval);
+
+  counter = setInterval(runInterval, interval); // Begin loop!
 }
 
 function runInterval() {
@@ -51,7 +63,8 @@ function finishInterval() {
   document
     .querySelectorAll(".digit")
     .forEach(timerPiece => timerPiece.classList.add("redDigit"));
-  btn.addEventListener("click", startInterval);
+
+  enableStartBtn(); // Let the user click the start button again
 }
 
 function updateSeconds() {
@@ -75,4 +88,26 @@ function updateMS() {
   msStr = msStr.length < 3 ? `0${msStr}` : msStr;
   msHundreds.textContent = msStr[0];
   msTens.textContent = msStr[1];
+}
+
+function handleResetClick() {
+  // Stop the timer, reset time,
+  clearInterval(counter);
+  resetTimer();
+  enableStartBtn();
+  resetBtn.disabled = true;
+}
+function resetTimer() {
+  time.seconds = 0;
+  time.ms = 0;
+  updateSeconds();
+  updateMS();
+}
+
+function enableStartBtn(firstTime) {
+  // Enable button for next run
+  startBtn.addEventListener("click", startInterval);
+  if (!firstTime) {
+    startBtn.disabled = false; // Only requiring input on the first use since it only happens once
+  }
 }
