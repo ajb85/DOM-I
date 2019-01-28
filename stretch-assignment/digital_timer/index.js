@@ -1,8 +1,15 @@
 let time = { seconds: 0, ms: 0 };
 const interval = 10;
-updateSeconds();
-updateMS();
-let counter = window.setInterval(runInterval, interval);
+
+let btn = document.querySelector("button");
+let counter;
+btn.addEventListener("click", startInterval);
+
+function startInterval() {
+  updateSeconds();
+  updateMS();
+  counter = setInterval(runInterval, interval);
+}
 
 function runInterval() {
   // Run until 10 seconds then clearInterval
