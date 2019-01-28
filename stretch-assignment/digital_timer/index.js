@@ -96,6 +96,7 @@ function handleResetClick() {
   resetTimer();
   enableStartBtn();
   resetBtn.disabled = true;
+  resetBtn.removeEventListener("click", handleResetClick);
 }
 function resetTimer() {
   time.seconds = 0;
