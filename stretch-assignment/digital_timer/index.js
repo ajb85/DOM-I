@@ -6,6 +6,19 @@ let counter;
 btn.addEventListener("click", startInterval);
 
 function startInterval() {
+  if (time.seconds) {
+    // Reset timer on any future runs
+    time.seconds = 0;
+    time.ms = 0;
+    // Reset text to white on any future runs
+    document
+      .querySelectorAll(".digit")
+      .forEach(timerPiece => timerPiece.classList.remove("redDigit"));
+  }
+  // Logging clicks to verify function (no "clicks" while timer running)
+  console.log("Click");
+  // btn disabled while counting
+  btn.removeEventListener("click", startInterval);
   updateSeconds();
   updateMS();
   counter = setInterval(runInterval, interval);
@@ -38,6 +51,7 @@ function finishInterval() {
   document
     .querySelectorAll(".digit")
     .forEach(timerPiece => timerPiece.classList.add("redDigit"));
+  btn.addEventListener("click", startInterval);
 }
 
 function updateSeconds() {
