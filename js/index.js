@@ -73,7 +73,11 @@ function newAnchor(link, text) {
 const cta = document.querySelector("section.cta");
 const ctaText = cta.children[0].children; // also could use .querySelctor(".cta-text") but I wanted to try this way
 ctaText[0].textContent = siteContent.cta.h1; // inserting h1 content
-ctaText[1].textContent = siteContent.cta.button; // inserting button content
+let button = ctaText[1];
+button.textContent = siteContent.cta.button; // inserting button content
+button.addEventListener("click", function() {
+  window.location.href = "./services.html";
+});
 //cta.children[1].src = siteContent.cta["img-src"]; // Goal says to use ID :(
 document.getElementById("cta-img").src = siteContent.cta["img-src"];
 
