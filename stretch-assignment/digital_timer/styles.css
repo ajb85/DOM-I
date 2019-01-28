@@ -2,11 +2,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #000;
 }
 
 .digit {
   display: inline-block;
   font-size: 80px;
+  color: #fff;
 }
 
 .redDigit {
