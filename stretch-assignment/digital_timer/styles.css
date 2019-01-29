@@ -10,12 +10,12 @@ body {
 .digit {
   display: inline-block;
   font-size: 80px;
-  color: #fff;
+  color: rgb(0, 255, 0);
 }
 
-.redDigit {
+/* .redDigit {
   color: red;
-}
+} */
 button {
   margin-top: 20px;
   width: 200px;

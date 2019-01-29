@@ -1,4 +1,4 @@
-let time = { seconds: 0, ms: 0 };
+let time = { seconds: 0, ms: 0, color: { red: 0, green: 255 } };
 const interval = 10;
 
 // addEventListener for the start timer button
@@ -56,8 +56,26 @@ function runInterval() {
     finishInterval();
     clearInterval(counter);
   }
+  if (time.ms % 20 === 0) {
+    updateTimerColor();
+  }
 }
-
+function updateTimerColor() {
+  // For the first 5 seconds, change the color to yellow
+  if (time.seconds < 5) {
+    if (time.color.red <= 253) {
+      time.color.red += 1;
+    } else time.color.red = 255;
+  } else {
+    // For the last 5 seconds, change the color to red
+    if (time.color.green >= 2) {
+      time.color.green -= 1;
+    } else time.color.green = 0;
+  }
+  document.querySelectorAll(".digit").forEach(element => {
+    element.style.color = `rgb(${time.color.red}, ${time.color.green}, 0)`;
+  });
+}
 function finishInterval() {
   // by querySelectorAll (Nodelist)
   document
